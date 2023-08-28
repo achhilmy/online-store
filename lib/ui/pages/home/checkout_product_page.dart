@@ -73,8 +73,6 @@ class _CheckoutProductPageState extends State<CheckoutProductPage> {
                     titles: "Checkout",
                   ),
                   SizedBox(
-                      // height: MediaQuery.of(context).size.height / 2.6,
-                      // color: Colors.amber,
                       child: CardMainContentCheckout(
                     titles: detail_products[index].title,
                     imageUrl: detail_products[index].imageUrls,

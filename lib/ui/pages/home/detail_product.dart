@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 import 'package:online_store/model/product_models.dart';
 import 'package:online_store/ui/pages/home/checkout_product_page.dart';
 import 'package:online_store/ui/widgets/card_product/card_button_bottom.dart';
@@ -22,7 +23,6 @@ class DetailProductPage extends StatefulWidget {
   final String? imageUrls;
   final String? ratingString;
   final String? priceString;
-
   @override
   State<DetailProductPage> createState() => _DetailProductPageState();
 }
@@ -31,6 +31,7 @@ class _DetailProductPageState extends State<DetailProductPage> {
   DetailProduct? detailProduct;
   int selectedIndex = -1;
   SharedPreferences? sp;
+  bool isLoading = false;
 
   List<DetailProduct> detail_products = List.empty(growable: true);
 
@@ -40,9 +41,15 @@ class _DetailProductPageState extends State<DetailProductPage> {
         .map((detailProduct) => jsonEncode(detailProduct.toJson()))
         .toList();
     sp?.setStringList("myData", detailProductListString);
+    setState(() {
+      isLoading = true;
+    });
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const CheckoutProductPage()));
+      setState(() {
+        isLoading = false;
+      });
     });
   }
 
@@ -50,42 +57,37 @@ class _DetailProductPageState extends State<DetailProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                HeaderBackClose(
-                  titles: widget.titles,
-                ),
-                const Text("data"),
-                MainContentProduct(
-                  imageUrl: widget.imageUrls,
-                  titleString: widget.titles,
-                  ratingString: widget.ratingString,
-                  priceString: widget.priceString,
-                ),
-              ],
-            ),
-            ButtonBottomWidget(
-              onPresseds: () {
-                // final cart = DetailProduct(
-                //   // id: (widget.id!) as int,
-                //   title: widget.titles!.toString(),
-                //   imageUrls: widget.imageUrls.toString(),
-                //   ratingString: widget.ratingString.toString(),
-                //   priceString: widget.priceString.toString(),
-                // );
-
-                saveIntoSp(detail_products.add(DetailProduct(
-                    // id: widget.id!.toInt(),
-                    title: widget.titles.toString(),
-                    imageUrls: widget.imageUrls.toString(),
-                    ratingString: widget.ratingString.toString(),
-                    priceString: widget.priceString.toString())));
-              },
-            )
-          ],
+        child: LoadingOverlay(
+          isLoading: isLoading,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  HeaderBackClose(
+                    titles: widget.titles,
+                  ),
+                  const Text("data"),
+                  MainContentProduct(
+                    imageUrl: widget.imageUrls,
+                    titleString: widget.titles,
+                    ratingString: widget.ratingString,
+                    priceString: widget.priceString,
+                  ),
+                ],
+              ),
+              ButtonBottomWidget(
+                onPresseds: () {
+                  saveIntoSp(detail_products.add(DetailProduct(
+                      // id: widget.id!.toInt(),
+                      title: widget.titles.toString(),
+                      imageUrls: widget.imageUrls.toString(),
+                      ratingString: widget.ratingString.toString(),
+                      priceString: widget.priceString.toString())));
+                },
+              )
+            ],
+          ),
         ),
       ),
     );
