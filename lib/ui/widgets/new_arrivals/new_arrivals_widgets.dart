@@ -38,6 +38,7 @@ class NewArrivalsWidgets extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const DetailProductPage(
+                          // id: 1,
                           imageUrls:
                               "https://s4.bukalapak.com/img/9134825101/large/sepedah.jpg",
                           titles: "Cooper Mount Bike",
@@ -59,8 +60,9 @@ class NewArrivalsWidgets extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const DetailProductPage(
+                          // id: 2,
                           imageUrls:
-                               "https://www.skmei-id.com/public/upload/product/jam-tangan-pria-digital-original-skmei-dg1759-1632128056.jpg",
+                              "https://www.skmei-id.com/public/upload/product/jam-tangan-pria-digital-original-skmei-dg1759-1632128056.jpg",
                           titles: "trafic Heart Monitor",
                           priceString: "120",
                           ratingString: "3.8",

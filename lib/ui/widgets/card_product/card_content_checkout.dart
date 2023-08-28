@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 
 class CardMainContentCheckout extends StatelessWidget {
-  const CardMainContentCheckout({super.key});
+  const CardMainContentCheckout(
+      {super.key, this.imageUrl, this.price, this.sizes, this.titles});
+
+  final String? imageUrl;
+  final String? titles;
+  final String? price;
+  final String? sizes;
 
   @override
   Widget build(BuildContext context) {
@@ -14,39 +20,38 @@ class CardMainContentCheckout extends StatelessWidget {
           Row(
             children: [
               Image.network(
-                "https://s4.bukalapak.com/img/9134825101/large/sepedah.jpg",
+                imageUrl.toString(),
                 height: 60,
                 width: 60,
               ),
               const SizedBox(
                 width: 20,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Cooper Monut Bike",
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    titles.toString(),
+                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text("\$570",
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15)),
-                  SizedBox(
+                  Text("\$ ${price.toString()}",
+                      style:
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
                     children: [
-                      Text("Size: XL",
-                          style: TextStyle(
+                      Text("Size: $sizes",
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 15)),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
-                      Text("Color: Blue"),
+                      const Text("Color: Blue"),
                     ],
                   )
                 ],
